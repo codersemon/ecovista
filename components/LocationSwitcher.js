@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const LocationSwitcher = ({ locations }) => {
   const [showLocationPicker, setShowLocationPicker] = useState(false);
+  console.log(locations);
 
   return (
     <div className="relative">
