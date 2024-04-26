@@ -1,8 +1,10 @@
 import { getLocationData } from "@/lib/location-info";
 import LocationSwitcher from "./LocationSwitcher";
+import { getLocationLatLongList } from "@/lib/location-info";
 
 const LocationInfoComponent = async ({ lat, lon }) => {
   const locationInfo = await getLocationData(lat, lon);
+  const locationsList = await getLocationLatLongList();
   return (
     <div className="col-span-12 flex flex-col justify-end lg:col-span-8 2xl:col-span-9">
       <div>
@@ -10,7 +12,7 @@ const LocationInfoComponent = async ({ lat, lon }) => {
           <h2 className="text-3xl font-bold text-white lg:text-4xl 2xl:text-[40px]">
             {locationInfo?.continent}
           </h2>
-          <LocationSwitcher />
+          <LocationSwitcher locations={locationsList} />
         </div>
         <p className="text-lg text-[#C4C4C4] lg:text-xl">
           {locationInfo?.countryName} | {locationInfo?.city}

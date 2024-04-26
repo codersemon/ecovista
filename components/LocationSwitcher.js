@@ -1,22 +1,11 @@
 "use client";
-import { getLocationLatLongList } from "@/lib/location-info";
+
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-const LocationSwitcher = () => {
+const LocationSwitcher = ({ locations }) => {
   const [showLocationPicker, setShowLocationPicker] = useState(false);
-  const [locations, setLocations] = useState([]);
-
-  useEffect(() => {
-    async function getLocationList() {
-      const data = await getLocationLatLongList();
-      setLocations(data);
-    }
-    // invoke data fetcher function
-    getLocationList();
-  }, []);
-  
 
   return (
     <div className="relative">
@@ -35,7 +24,19 @@ const LocationSwitcher = () => {
             role="list"
             className="divide-y divide-gray-100 [&>*]:py-2 [&>li]:cursor-pointer"
           >
-            {locations?.length > 0 ? locations?.sort((a, b) => a.name.localeCompare(b.name))?.map(location => <li key={location.id}><Link href={`/${location.name}?latitude=${location.lat}&longitude=${location.long}`}>{location.name}</Link></li>) : ''}
+            {locations?.length > 0
+              ? locations
+                  ?.sort((a, b) => a.name.localeCompare(b.name))
+                  ?.map((location) => (
+                    <li key={location.id}>
+                      <Link
+                        href={`/${location.name}?latitude=${location.lat}&longitude=${location.long}`}
+                      >
+                        {location.name}
+                      </Link>
+                    </li>
+                  ))
+              : ""}
           </ul>
         </div>
       )}
